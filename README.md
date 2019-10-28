@@ -29,6 +29,10 @@ clone this repository and bind your current user to it.
 
     bash -c "$(wget -O- https://raw.githubusercontent.com/tpanj/bash4all/master/install.bash)"
 
+**or shortened:**
+
+    bash -c "$(wget -O- git.io/bash4all)"
+
 # Usage
 Here are described some examples of usage. The rest is maintained in [Wiki](https://github.com/tpanj/bash4all/wiki) pages.
 

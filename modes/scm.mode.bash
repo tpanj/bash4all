@@ -1,4 +1,4 @@
-unalias gcl co st gb branch gob add revert pull push log 2>/dev/null
+unalias gcl co st sd gb branch gob add commit revert pull push log 2>/dev/null
 
 if [[ -z "$1" ]]; then
 _SCM=git
@@ -15,8 +15,9 @@ case "$_SCM" in
     alias {gbra,gb,branch}='git branch'
     alias {gco,revert}='git checkout'
     alias {gcob,gob}='git checkout -b'
+    alias sd='git diff'
     alias {gadd,add}='git add '
-    alias {gcom,gc}='git commit'
+    alias {gcom,gc,commit}='git commit'
     alias {gpul,pull}='git pull'
     alias {gl,log}='git log'
     alias {gpus,push}='git push'
@@ -27,7 +28,8 @@ case "$_SCM" in
     unalias sco sst sadd svu sbr svc commit sl 2>/dev/null
     alias {sco,co}='svn checkout'
     alias {sst,st}='svn status'
-    alias {sadd,add}='svn add '
+    alias {sadd,add}='svn add'
+    alias sd='svn diff'
     alias {svu,pull}='svn update'
     alias {sbr,branch}='svn tav'
     alias revert='svn revert'

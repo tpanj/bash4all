@@ -106,7 +106,6 @@ BASED=$BASED
 for i in ~/.bash4all/core/*.bash ; do
   . \$i
 done
-[ -f ~/.bash4allrc ] && . ~/.bash4allrc
 EOF
 
 echo "Installed call of main script to $_FILE_EXSISTS \"$_PROFILE\"."
