@@ -8,10 +8,18 @@ mode() {
     PS1="$PS1\e[93m\${PS_MODE}\e[00m> "
   else
     # clean up mode
-    if [[ $PS_MODE ]] && [[ -z "$1" ]]; then
-      . <(cat ~/.bash4all/modes/"$_MODE".mode.bash | grep unalias)
-      PS1="$_PS_MODE"
+    if [[ $PS_MODE ]]; then
+      . <(cat ~/.bash4all/modes/"$_MODE".mode.bash | grep -e unalias -e unset |grep -v PS_MODE)
+      export PS1="$_PS_MODE"
       unset _MODE _PS_MODE PS_MODE
+      if [[ "$1" ]]; then # switch to new one
+        export _PS_MODE="$PS1"
+        export _MODE="$1"
+        export PS_MODE="$1"
+        shift
+        . ~/.bash4all/modes/"$_MODE".mode.bash "$@"
+        PS1="$PS1\e[93m\${PS_MODE}\e[00m> "
+      fi
     fi
   fi
 }

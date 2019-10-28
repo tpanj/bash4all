@@ -11,13 +11,18 @@ _determine_scm() {
 }
 
 cd() {
-  builtin cd "$1"
+  if [ "$1" ]; then
+    builtin cd "$1"
+  else
+    builtin cd
+  fi
   local _SCM
   _SCM=$(_determine_scm "$PWD")
   if [[ "${_SCM}" != "/" ]]; then
     mode scm $_SCM
   else
     [[ "${PS_MODE:0:3}" == "scm" ]] && mode
+    return 0
   fi
 }
 
