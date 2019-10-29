@@ -55,3 +55,12 @@ fi
 if [ SUSE = "$BASED" ]; then
 alias I='sudo zypper install'
 fi
+
+# autocomplete aliases
+if [ -f ~/.bash4all/core/bash_completion.sh ]; then
+  type _complete_alias >/dev/null 2>&1
+  if [ $? = 1 ]; then . ~/.bash4all/core/bash_completion.sh; fi
+  for c in I i U u S se Qf q; do
+    complete -F _complete_alias $c
+  done
+fi
