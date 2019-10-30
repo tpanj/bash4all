@@ -2,7 +2,9 @@
 _determine_scm() {
     D=$(realpath "$1")
     while [[ $D != "/" ]]; do
+        [ -d .bzr ] && echo bzr && return 0
         [ -d .git ] && echo git && return 0
+        [ -d .hg  ] && echo  hg && return 0
         [ -d .svn ] && echo svn && return 0
         builtin cd ..
         D=$(pwd)

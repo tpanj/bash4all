@@ -8,6 +8,16 @@ fi
 export PS_MODE="${_MODE}-${_SCM}"
 
 case "$_SCM" in
+  bzr)
+    alias st='bzr status'
+    alias branch='bzr branch'
+    alias revert='bzr checkout'
+    alias sd='bzr diff'
+    alias add='bzr add '
+    alias commit='bzr commit'
+    alias pull='bzr pull'
+    alias log='bzr log'
+    alias push='bzr push'    ;;
   git)
     unalias gcl gst gbra gco gcob gadd gcom gc gl gpus gpus glom ghom 2>/dev/null
     alias {gcl,co}='git clone'
@@ -23,6 +33,17 @@ case "$_SCM" in
     alias {gpus,push}='git push'
     alias glom='git pull origin master'
     alias ghom='git push origin master'
+    ;;
+  hg) # mercurial
+    alias st='hg status'
+    alias branch='hg branch'
+    alias revert='hg checkout'
+    alias sd='hg diff'
+    alias add='hg add '
+    alias commit='hg commit'
+    alias pull='hg pull'
+    alias log='hg log'
+    alias push='hg push'
     ;;
   svn)
     unalias sco sst sadd svu sbr svc commit sl 2>/dev/null

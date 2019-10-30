@@ -43,7 +43,7 @@ Aliases:
 * i - installs package(s)
 * U - unconditionally uninstall package(s)
 * u - uninstall package(s)
-* S - service command (start | stop )
+* S - service command (start, stop, .. )
 
 Example:
 ```bash
@@ -64,7 +64,7 @@ Famous <kbd>Ctrl</kbd> + <kbd>r</kbd> search through commands history.
 ## Core functions
 **mode** for a particular job
 * pkg -  mode for installing and uninstalling software
-* scm - Source Code Management for <git | svn >. This module starts also automatically when in SCM folder
+* scm - Source Code Management for bzr, git, hg or svn. This module starts also automatically when in SCM folder
 
 **extract** archive
 Extracting to current dir
