@@ -4,8 +4,12 @@ OS=$(uname -s)
 shopt -s expand_aliases
 unset _FILE_EXSISTS _PROFILE
 
+Echo () {
+  echo "=> $@"
+}
+
 [ -d ~/.bash4all ] && {
-  echo "Alreary installed. Proceed with update? [Y/n]"
+  Echo "Alreary installed. Proceed with update? [Y/n]"
   read yn
   if [[ $yn != [Nn]* ]]; then
     cd ~/.bash4all; git pull
@@ -73,12 +77,12 @@ case $OS in
     nyi_contribute OS
 esac
 
-echo "This script will backup necessary files and install per user config"
+Echo "This script will backup necessary files and install per user config"
 cmd_exists git || {
   echo -n "Do you want to install needed git using \""
   echo $(alias I | sed -n 's/^alias I=.//p'|sed -n 's/.$//p' ) git\" ?
 }
-echo "[Y/n]"
+Echo "[Y/n]"
 read yn
 [[ $yn != [Nn]* ]] && {
   cmd_exists git || I git
@@ -96,7 +100,7 @@ fi
 
 [ "$_FILE_EXSISTS" ] && {
   cp $_PROFILE{,.bash4all};
-  echo "Backups of existing files will be created with .bash4all extensions"
+  Echo "Backups of existing files will be created with .bash4all extensions"
 }
 
 cat >>$_PROFILE <<EOF
@@ -108,7 +112,7 @@ for i in ~/.bash4all/core/*.bash ; do
 done
 EOF
 
-echo "Installed call of main script to $_FILE_EXSISTS \"$_PROFILE\"."
+Echo "Installed call of main script to $_FILE_EXSISTS \"$_PROFILE\"."
 
 # normalization outside repo
 _lc_BASED="${BASED,,}"
@@ -116,4 +120,6 @@ _lc_BASED="${BASED,,}"
 
 # user defined post install
 [ -f ~/.bash4all_install ] && . ~/.bash4all_install
+Echo "Installation complete. To start using it here now type 'bash -' or open new terminal."
+
 exit 0
