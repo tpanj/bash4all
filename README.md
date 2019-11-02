@@ -16,7 +16,7 @@ are highly desirable and appreciated.
 
 # Installation
 For Unix-like operating system ( macOS, Linux, BSD).
-Run installer with bash script.
+Runing installer as bash script to install or update bash4all.
 Script will automatically install git from "your" repository 
 (if not already available on system),
 clone this repository and bind your current user to it.
@@ -37,13 +37,17 @@ clone this repository and bind your current user to it.
 Here are described some examples of usage. The rest is maintained in [Wiki](https://github.com/tpanj/bash4all/wiki) pages.
 
 ## Modes
-### pkg - example managing software packages and services
+### development <cc | js | py | .. >
+Development and executing mode for programming language.
+
+### pkg - managing software packages and services
 Aliases:
 * I - unconditionally installs package(s)
 * i - installs package(s)
 * U - unconditionally uninstall package(s)
 * u - uninstall package(s)
 * S - service command (start, stop, .. )
+* ...
 
 Example:
 ```bash
@@ -51,6 +55,24 @@ mode pkg
 I vlc # installs vlc
 ```
 ### scm - managing software packages and services
+Source Code Management for bzr, git, hg or svn.
+
+**Generic SCM commands:**
+* **co** URL - Clone or checkout repository. Default set to git type
+* **add** item - add item under SCM
+* **commit** - track change
+* **push** - publish changes
+* **pull** - get changes from remote
+* **branch** - create branch
+* **log** - show commit history
+
+## Core functions
+**mode** for a particular job
+* pkg -  mode for installing and uninstalling software
+* scm - Source Code Management. This module starts also automatically when in SCM folder
+
+**extract** archive
+Extracting to current dir
 
 ## Keys bindings
 
@@ -61,23 +83,12 @@ cycles through history only for matching entries.
 **Full text backward search**
 Famous <kbd>Ctrl</kbd> + <kbd>r</kbd> search through commands history.
 
-## Core functions
-**mode** for a particular job
-* pkg -  mode for installing and uninstalling software
-* scm - Source Code Management for bzr, git, hg or svn. This module starts also automatically when in SCM folder
-
-**extract** archive
-Extracting to current dir
-
-## Generic SCM commands
-* **co** URL - Clone or checkout repository. Default set to git type
-* **add** item - add item under SCM
-* **commit** - track change
-* **push** - publish changes
-* **pull** - get changes from remote
-* **branch** - create branch
-* **log** - show commit history
-
 # More
+
+Bash4all uses some other great scripts:
+* **[nvm](https://github.com/nvm-sh/nvm)** - nodejs version manager. Available under `mode development js`
+* **[cht](https://github.com/chubin/cheat.sh)** - best community driven documentation repositories. Available under `mode development *`
+* ...
+
 You can also personalize installer. The rest of doc is found in 
 [Wiki](https://github.com/tpanj/bash4all/wiki) pages to minimize core repository.
