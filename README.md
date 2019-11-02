@@ -15,8 +15,8 @@ Help and [contributions](https://github.com/tpanj/bash4all/wiki/Contribute)
 are highly desirable and appreciated.
 
 # Installation
-For Unix-like operating system ( macOS, Linux, BSD).
-Runing installer as bash script to install or update bash4all.
+Bash4all is ready for Unix-like operating system ( macOS, Linux, BSD).
+Run installer as bash script to install or update it.
 Script will automatically install git from "your" repository 
 (if not already available on system),
 clone this repository and bind your current user to it.
