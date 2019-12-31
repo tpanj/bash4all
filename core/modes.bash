@@ -5,7 +5,7 @@ mode() {
     export PS_MODE="$1"
     shift
     . ~/.bash4all/modes/"$_MODE".mode.bash "$@"
-    PS1="$PS1\e[93m\${PS_MODE}\e[00m> "
+    PS1="$PS1\[\033[93m\]\${PS_MODE}\[\033[00m\]> "
   else
     # clean up mode
     if [[ $PS_MODE ]]; then

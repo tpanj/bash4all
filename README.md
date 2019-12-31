@@ -8,8 +8,11 @@ you only need to know package name.
 And we have scm-git mode which enhances git usage.
 Keyboard shortcuts should should work the same documented way across distributions / OSes.
 This script also enhances configuration, autocompletion and default settings.
+Effective documentation is kept in wiki.
+
 Helps bridge the gap between different systems.
-Effective documentation is keeped in wiki.
+What developers say is a wealth of choices is possible for some users a torment.
+That is the main reason script exists but not leave behind those who are eager to learn new things.
 
 Help and [contributions](https://github.com/tpanj/bash4all/wiki/Contribute)
 are highly desirable and appreciated.

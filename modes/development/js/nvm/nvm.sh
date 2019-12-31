@@ -223,13 +223,29 @@ nvm_install_latest_npm() {
 
     local NVM_IS_6_OR_ABOVE
     NVM_IS_6_OR_ABOVE=0
+    local NVM_IS_6_2_OR_ABOVE
+    NVM_IS_6_2_OR_ABOVE=0
     if [ $NVM_IS_5_OR_ABOVE -eq 1 ] && nvm_version_greater_than_or_equal_to "${NODE_VERSION}" 6.0.0; then
       NVM_IS_6_OR_ABOVE=1
+      if nvm_version_greater_than_or_equal_to "${NODE_VERSION}" 6.2.0; then
+        NVM_IS_6_2_OR_ABOVE=1
+      fi
     fi
 
-    if [ $NVM_IS_4_4_OR_BELOW -eq 1 ] || (\
-      [ $NVM_IS_5_OR_ABOVE -eq 1 ] && nvm_version_greater 5.10.0 "${NODE_VERSION}" \
-    ); then
+    local NVM_IS_9_OR_ABOVE
+    NVM_IS_9_OR_ABOVE=0
+    local NVM_IS_9_3_OR_ABOVE
+    NVM_IS_9_3_OR_ABOVE=0
+    if [ $NVM_IS_6_2_OR_ABOVE -eq 1 ] && nvm_version_greater_than_or_equal_to "${NODE_VERSION}" 9.0.0; then
+      NVM_IS_9_OR_ABOVE=1
+      if nvm_version_greater_than_or_equal_to "${NODE_VERSION}" 9.3.0; then
+        NVM_IS_9_3_OR_ABOVE=1
+      fi
+    fi
+
+    if [ $NVM_IS_4_4_OR_BELOW -eq 1 ] || {
+      [ $NVM_IS_5_OR_ABOVE -eq 1 ] && nvm_version_greater 5.10.0 "${NODE_VERSION}"; \
+    }; then
       nvm_echo '* `npm` `v5.3.x` is the last version that works on `node` 4.x versions below v4.4, or 5.x versions below v5.10, due to `Buffer.alloc`'
       $NVM_NPM_CMD install -g npm@5.3
     elif [ $NVM_IS_4_4_OR_BELOW -eq 0 ] && nvm_version_greater 4.7.0 "${NODE_VERSION}"; then
@@ -238,6 +254,12 @@ nvm_install_latest_npm() {
     elif [ $NVM_IS_6_OR_ABOVE -eq 0 ]; then
       nvm_echo '* `npm` `v5.x` is the last version that works on `node` below `v6.0.0`'
       $NVM_NPM_CMD install -g npm@5
+    elif \
+      { [ $NVM_IS_6_OR_ABOVE -eq 1 ] && [ $NVM_IS_6_2_OR_ABOVE -eq 0 ]; } \
+      || { [ $NVM_IS_9_OR_ABOVE -eq 1 ] && [ $NVM_IS_9_3_OR_ABOVE -eq 0 ]; } \
+    ; then
+      nvm_echo '* `npm` `v6.9` is the last version that works on `node` `v6.0.x`, `v6.1.x`, `v9.0.x`, `v9.1.x`, or `v9.2.x`'
+      $NVM_NPM_CMD install -g npm@6.9
     else
       nvm_echo '* Installing latest `npm`; if this does not work on your node version, please report a bug!'
       $NVM_NPM_CMD install -g npm
@@ -2165,7 +2187,7 @@ nvm_die_on_prefix() {
   if [ -n "${NVM_NPM_CONFIG_PREFIX_ENV-}" ]; then
     local NVM_CONFIG_VALUE
     eval "NVM_CONFIG_VALUE=\"\$${NVM_NPM_CONFIG_PREFIX_ENV}\""
-    if [ -n "${NVM_CONFIG_VALUE-}" ]; then
+    if [ -n "${NVM_CONFIG_VALUE-}" ] && ! nvm_tree_contains_path "${NVM_DIR}" "${NVM_CONFIG_VALUE}"; then
       nvm deactivate >/dev/null 2>&1
       nvm_err "nvm is not compatible with the \"${NVM_NPM_CONFIG_PREFIX_ENV}\" environment variable: currently set to \"${NVM_CONFIG_VALUE}\""
       nvm_err "Run \`unset ${NVM_NPM_CONFIG_PREFIX_ENV}\` to unset it."
@@ -2909,6 +2931,10 @@ nvm() {
           VERSION="$(nvm_version "${PROVIDED_VERSION}")"
         fi
         unset NVM_RC_VERSION
+        if [ -z "${VERSION}" ]; then
+          nvm_err 'Please see `nvm --help` or https://github.com/nvm-sh/nvm#nvmrc for more information.'
+          return 127
+        fi
       else
         VERSION="$(nvm_match_version "${PROVIDED_VERSION}")"
       fi
@@ -3346,14 +3372,24 @@ nvm() {
       local NVM_NODE_PREFIX
       NVM_IOJS_PREFIX="$(nvm_iojs_prefix)"
       NVM_NODE_PREFIX="$(nvm_node_prefix)"
-      case "$1" in
-        "stable" | "unstable" | "${NVM_IOJS_PREFIX}" | "${NVM_NODE_PREFIX}" | "system")
-          nvm_err "${1-} is a default (built-in) alias and cannot be deleted."
-          return 1
-        ;;
-      esac
+      local NVM_ALIAS_EXISTS
+      NVM_ALIAS_EXISTS=0
+      if [ -f "${NVM_ALIAS_DIR}/${1-}" ]; then
+        NVM_ALIAS_EXISTS=1
+      fi
 
-      [ ! -f "${NVM_ALIAS_DIR}/${1-}" ] && nvm_err "Alias ${1-} doesn't exist!" && return
+      if [ $NVM_ALIAS_EXISTS -eq 0 ]; then
+        case "$1" in
+          "stable" | "unstable" | "${NVM_IOJS_PREFIX}" | "${NVM_NODE_PREFIX}" | "system")
+            nvm_err "${1-} is a default (built-in) alias and cannot be deleted."
+            return 1
+          ;;
+        esac
+
+        nvm_err "Alias ${1-} doesn't exist!"
+        return
+      fi
+
       local NVM_ALIAS_ORIGINAL
       NVM_ALIAS_ORIGINAL="$(nvm_alias "${1}")"
       command rm -f "${NVM_ALIAS_DIR}/${1}"
@@ -3464,7 +3500,7 @@ nvm() {
       NVM_VERSION_ONLY=true NVM_LTS="${NVM_LTS-}" nvm_remote_version "${PATTERN:-node}"
     ;;
     "--version")
-      nvm_echo '0.35.0'
+      nvm_echo '0.35.2'
     ;;
     "unload")
       nvm deactivate >/dev/null 2>&1
