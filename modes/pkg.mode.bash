@@ -1,4 +1,4 @@
-# A-Z Sorted.
+# A-Z Sorted. Alias content always in single quotes
 unalias I i U u S se Qf q 2>/dev/null
 
 if [ ARCH = "$BASED" ]; then
