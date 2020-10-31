@@ -1,6 +1,6 @@
 # Install and update script
 INSTALLED_FROM=https://raw.githubusercontent.com/tpanj/bash4all/master/modes/pkg.mode.bash
-OS=$(uname -s)
+OS=$(uname -o)
 shopt -s expand_aliases
 unset _FILE_EXSISTS _PROFILE
 
@@ -18,7 +18,7 @@ Echo () {
 }
 
 nyi_contribute() {
-  echo "Not yet implemented for that your $1"
+  echo "Not yet implemented for $1 you have."
   echo "Have you thought to https://github.com/tpanj/bash4all/wiki/Contribute"
   exit 2
 }
@@ -36,7 +36,7 @@ get_install_cmd() {
 }
 
 case $OS in
-  Linux)
+  "GNU/Linux")
     DISTRIB=$(LC_ALL=C lsb_release --id | sed -n 's/^Distributor ID:\t//p')
     case "$DISTRIB" in
       Ubuntu | LinuxMint | Debian | MX)
@@ -54,13 +54,13 @@ case $OS in
       Mageia | Mandriva | PCLinuxOS)
         . <(get_install_cmd MAGEIA)
         ;;
-      "openSUSE project")
+      "openSUSE project" | SUSE)
         . <(get_install_cmd SUSE)
         ;;
       PC)
         ;;
       *)
-        nyi_contribute DISTRIBUTION
+        nyi_contribute "$DISTRIB"
     esac
     ;;
 # not linuxes
@@ -73,8 +73,11 @@ case $OS in
   FreeBSD)
     . <(get_install_cmd BSD)
     ;;
+  # Cygwin)
+  #   . <(get_install_cmd DOS)
+  #   ;;
   *)
-    nyi_contribute OS
+    nyi_contribute $OS
 esac
 
 Echo "This script will backup necessary files and install per user config"
