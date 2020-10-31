@@ -44,11 +44,10 @@ alias I='sudo dnf install -y'
 alias i='sudo dnf install'
 alias U='sudo dnf remove -y'
 alias u='sudo dnf remove'
-alias q='dnf info'
 alias Qf='dnf provides'
 alias q='dnf info'
 alias S='sudo service'
-alias se'dnf info'
+alias se='dnf info'
 fi
 
 if [ GENTOO = "$BASED" ]; then
