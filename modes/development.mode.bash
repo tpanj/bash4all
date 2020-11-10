@@ -43,6 +43,33 @@ case "$_PLANG" in
     unalias pip 2>/dev/null
     alias pip='pip3'
     ;;
+  vlang)
+    v() {
+      V_DIR=~/.bash4all/modes/development/v
+      if [ up = "$1" -a ! -d "$V_DIR" ]; then
+        git clone https://github.com/vlang/v $V_DIR
+        (cd $V_DIR && make)
+        return
+      fi
+      $V_DIR/v $@
+    }
+    _v_complete() {
+      local cur cmds
+      COMPREPLY=()
+      cur=${COMP_WORDS[COMP_CWORD]}
+      opts=""
+      if [ $COMP_CWORD -le 1 ]; then
+        opts+=$( v help | sed -n "1,/supports the following/d;/^*/d;/for more information/q;p" | cut -c 4-16 | grep -oP '([\w-]+)\s+' )
+      fi
+      opts+=$(compgen -f -o plusdirs -X '!*.v' -- "${cur}")
+      case "$cur" in
+        *)
+        COMPREPLY=( $( compgen -W '$opts' -- $cur ) );;
+      esac
+      return 0
+    }
+    complete -F _v_complete v
+    ;;
   *)
     echo "Unknown ${_MODE} or not implemented"
     PS1="$_PS_MODE"
