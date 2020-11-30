@@ -53,22 +53,7 @@ case "$_PLANG" in
       fi
       $V_DIR/v $@
     }
-    _v_complete() {
-      local cur cmds
-      COMPREPLY=()
-      cur=${COMP_WORDS[COMP_CWORD]}
-      opts=""
-      if [ $COMP_CWORD -le 1 ]; then
-        opts+=$( v help | sed -n "1,/supports the following/d;/^*/d;/for more information/q;p" | cut -c 4-16 | grep -oP '([\w-]+)\s+' )
-      fi
-      opts+=$(compgen -f -o plusdirs -X '!*.v' -- "${cur}")
-      case "$cur" in
-        *)
-        COMPREPLY=( $( compgen -W '$opts' -- $cur ) );;
-      esac
-      return 0
-    }
-    complete -F _v_complete v
+    source /dev/stdin <<<"$(v complete setup bash)"
     ;;
   *)
     echo "Unknown ${_MODE} or not implemented"
