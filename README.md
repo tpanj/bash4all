@@ -1,5 +1,5 @@
 # bash4all
-Normalizing bash administration across different OS-es and distributions plus various helpful aliases and functions.
+Normalizing bash administration and development across different OS-es and distributions plus various helpful aliases and functions.
 
 With that it is meant that you can use bash similar way in different environments 
 with the help of so called modes and aliases.
@@ -8,7 +8,8 @@ you only need to know package name.
 And we have scm-git mode which enhances git usage.
 Keyboard shortcuts should should work the same documented way across distributions / OSes.
 This script also enhances configuration, autocompletion and default settings.
-Effective documentation is kept in wiki.
+Effective documentation is kept in [wiki](https://github.com/tpanj/bash4all/wiki).
+Check also latest [video demos](https://github.com/tpanj/bash4all-media)
 
 Helps bridge the gap between different systems.
 What developers say is a wealth of choices is possible for some users a torment.
