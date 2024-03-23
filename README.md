@@ -94,5 +94,5 @@ Bash4all uses some other great scripts:
 * **[cht](https://github.com/chubin/cheat.sh)** - best community driven documentation repositories. Available under `mode development *`
 * ...
 
-You can also personalize installer. The rest of doc is found in 
+You can also [personalize complex installer](https://github.com/tpanj/bash4all/wiki/pkg#advanced). The rest of doc is found in
 [Wiki](https://github.com/tpanj/bash4all/wiki) pages to minimize core repository.
