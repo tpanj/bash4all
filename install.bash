@@ -37,12 +37,12 @@ get_install_cmd() {
 
 case $OS in
   "GNU/Linux")
-    DISTRIB=$(LC_ALL=C lsb_release --id | sed -n 's/^Distributor ID:\t//p')
+    DISTRIB=$(lsb_release --id --short)
     case "$DISTRIB" in
       Ubuntu | LinuxMint | Debian | MX)
         . <(get_install_cmd DEBIAN)
         ;;
-      Arch | ManjaroLinux )
+      Arch | ManjaroLinux | Garuda)
         . <(get_install_cmd ARCH)
         ;;
       CentOS | Redhat | Fedora | Scientific)
