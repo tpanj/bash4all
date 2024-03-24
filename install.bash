@@ -86,6 +86,7 @@ cmd_exists git || {
   echo $(alias I | sed -n 's/^alias I=.//p'|sed -n 's/.$//p' ) git\" ?
 }
 Echo "[Y/n]"
+if [ Y = "$NON_INTERACTIVE" ]; then yn=Y; else read yn ;fi
 read yn
 [[ $yn != [Nn]* ]] && {
   cmd_exists git || I git
