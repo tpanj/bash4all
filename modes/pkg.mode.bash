@@ -2,13 +2,13 @@
 unalias I i Qf q S se U u 2>/dev/null
 
 if [ ARCH = "$BASED" ]; then
-alias I='sudo pacman -Syu --needed'
+alias I='sudo pacman -Syu --needed --noconfirm'
 alias i='sudo pacman -S --needed'
 alias Pkg='makepkg -fp PKGBUILD'
 alias Qf='sudo pacman -Fyl'
 alias q='pacman -Qi'
 alias se='pacman -Ss'
-alias U='sudo pacman -Rys'
+alias U='sudo pacman -Rys --noconfirm'
 alias u='sudo pacman -Rs'
 fi
 
@@ -74,7 +74,7 @@ alias i='sudo dnf install'
 alias Qf='dnf provides'
 alias q='dnf info'
 alias S='sudo service'
-alias se='dnf info'
+alias se='dnf search'
 alias U='sudo dnf remove -y'
 alias u='sudo dnf remove'
 fi

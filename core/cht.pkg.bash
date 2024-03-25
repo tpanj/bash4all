@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-FILE="/home/$USER/.bash4all/modes/pkg.mode.bash"
+FILE=~/.bash4all/modes/pkg.mode.bash
 
 _usage() {
     echo "usage: (DISTRIBS in any order; use autocompletion) e.g." _FROM_OS_ _TO_OS_ _optional_BASH4ALL_
